@@ -1,0 +1,11 @@
+mcp[cli]
+httpx
+ddgs
+tavily-python
+crawl4ai
+python-dotenv
+pydantic>=2.13.4
+faiss-cpu>=1.8.0
+numpy>=1.26
+beautifulsoup4
+lxml
