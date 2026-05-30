@@ -64,9 +64,42 @@ if _client_path.exists():
     _spec = _importlib_util.spec_from_file_location("llm_gatewayV7_client", _client_path)
     _mod = _importlib_util.module_from_spec(_spec)
     _spec.loader.exec_module(_mod)
-    LLM = _mod.LLM
+    _BaseLLM = _mod.LLM
 else:
-    LLM = None  # populated once V7 is built; importers should ensure_gateway() first
+    _BaseLLM = None
+
+
+class LLM:
+    """Thin wrapper around the gateway LLM client that retries on 502/503."""
+
+    def __init__(self, *args, **kwargs):
+        self._inner = _BaseLLM(*args, **kwargs) if _BaseLLM else None
+
+    def _retry(self, fn, *args, retries=5, **kwargs):
+        import httpx as _httpx
+        for attempt in range(retries):
+            try:
+                return fn(*args, **kwargs)
+            except _httpx.HTTPStatusError as e:
+                if e.response.status_code in (429, 502, 503) and attempt < retries - 1:
+                    # Waits: 20, 40, 60, 80s — covers 1-min TPM rate-limit windows
+                    wait = 20 * (attempt + 1)
+                    print(f"[gateway] {e.response.status_code} on attempt {attempt+1}, retrying in {wait}s…")
+                    time.sleep(wait)
+                else:
+                    raise
+
+    def chat(self, *args, **kwargs):
+        return self._retry(self._inner.chat, *args, **kwargs)
+
+    def embed(self, *args, **kwargs):
+        return self._retry(self._inner.embed, *args, **kwargs)
+
+    def stream(self, *args, **kwargs):
+        return self._inner.stream(*args, **kwargs)
+
+    def capabilities(self):
+        return self._inner.capabilities()
 
 
 def embed(text: str, task_type: str = "retrieval_document") -> dict:

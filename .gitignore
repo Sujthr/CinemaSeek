@@ -29,6 +29,14 @@ Thumbs.db
 *.swp
 *.swo
 
+# Claude Code local settings
+.claude/
+
 # Temp
 *.tmp
 *.bak
+
+# Runtime artifacts
+usage.json
+index_corpus.log
+sandbox/reminder_*.txt

@@ -172,7 +172,6 @@ def observe(
         prompt=prompt,
         system=SYSTEM,
         auto_route="perception",
-        provider="g",
         response_format={
             "type": "json_schema",
             "schema": schema,

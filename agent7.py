@@ -88,7 +88,7 @@ async def run(query: str) -> str:
                 print(f"\n─── iter {it} ─────────────────────────────────────────────")
 
                 # 1. MEMORY READ
-                hits = memory.read(query, history)
+                hits = memory.read(query, history, top_k=4)
                 print(f"[memory.read]   {len(hits)} hits")
 
                 # 2. PERCEPTION

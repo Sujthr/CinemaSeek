@@ -50,9 +50,10 @@ def _load() -> list[MemoryItem]:
 
 
 def _save(items: list[MemoryItem]) -> None:
-    STATE_PATH.write_text(
-        json.dumps([i.model_dump(mode="json") for i in items], indent=2)
-    )
+    data = json.dumps([i.model_dump(mode="json") for i in items], indent=2)
+    tmp = STATE_PATH.with_suffix(".tmp")
+    tmp.write_text(data, encoding="utf-8")
+    tmp.replace(STATE_PATH)  # atomic on NTFS same-drive rename
 
 
 # ── vector index ────────────────────────────────────────────────────────────
@@ -292,7 +293,6 @@ def _llm_classify(raw_text: str, schema: dict) -> dict:
             "  attribute, include {\"raw\": <the original content>}."
         ),
         auto_route="memory",
-        provider="g",
         response_format={
             "type": "json_schema",
             "schema": schema,

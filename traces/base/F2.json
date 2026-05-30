@@ -1,0 +1,10 @@
+{
+  "query": "Across the papers I have indexed, what do they say about chain-of-thought reasoning?",
+  "iterations": 4,
+  "final_answer": "CoT prompting generates intermediate reasoning steps before the final answer, distributing reasoning across multiple steps, making errors visible. Gains: +41pp on arithmetic. Scale-dependent: needs 100B+ params.",
+  "tool_calls": [
+    "search_knowledge(chain-of-thought reasoning)"
+  ],
+  "notes": "Fresh process, persisted FAISS index from F1. Vector retrieval returned chain_of_thought.md chunks directly.",
+  "status": "success"
+}

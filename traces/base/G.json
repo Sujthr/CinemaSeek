@@ -1,0 +1,11 @@
+{
+  "query": "Across these papers, how do they handle the credit assignment problem?",
+  "iterations": 8,
+  "final_answer": "DPO: weighted gradient by model surprise. CoT: distributes credit across explicit reasoning steps. Transformer: attention weights route credit to each position. LoRA: concentrates credit in low-rank subspace. ReAct: interleaved thought-action traces.",
+  "tool_calls": [
+    "search_knowledge(credit assignment k=10)",
+    "search_knowledge(credit assignment k=20)"
+  ],
+  "notes": "SEMANTIC RETRIEVAL: phrase \"credit assignment\" appears ZERO times in any paper. Vector search surfaced all 5 papers via semantic similarity.",
+  "status": "success"
+}

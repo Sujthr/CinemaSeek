@@ -1,0 +1,8 @@
+{
+  "query": "Compare how the ReAct paper and the Chain-of-Thought paper differ in their treatment of intermediate reasoning.",
+  "iterations": 3,
+  "final_answer": "CoT: single linear chain of internal reasoning, errors visible only after. ReAct: interleaves thought-action-observation in a loop, errors caught on the fly via external grounding.",
+  "tool_calls": [],
+  "notes": "Decision answered directly from memory hits containing both paper chunks. No tool call needed.",
+  "status": "success"
+}

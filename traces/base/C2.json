@@ -1,0 +1,8 @@
+{
+  "query": "When is mom's birthday?",
+  "iterations": 5,
+  "final_answer": "Mom's birthday is on May 15, 2026. Reminders set two weeks before (May 1) and on the day.",
+  "tool_calls": [],
+  "notes": "Answered from FAISS memory - no tool calls. Vector search retrieved birthday from prior run.",
+  "status": "success"
+}
